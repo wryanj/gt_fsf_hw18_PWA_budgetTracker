@@ -56,6 +56,17 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
       <!--Script for index.js client script in public-->
       <script src="index.js"></script>
+      <!--This is the script to register the service worker-->
+      <script>
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            navigator.serviceWorker.register("service-worker.js")
+              .then(reg => {
+                console.log("We found your service worker file!", reg);
+              });
+          });
+        }
+      </script>
 
   </body>
 
