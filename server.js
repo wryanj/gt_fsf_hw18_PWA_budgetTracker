@@ -1,28 +1,43 @@
-const express = require("express");
-const logger = require("morgan");
-const mongoose = require("mongoose");
-const compression = require("compression");
+/* -------------------------------------------------------------------------- */
+/*                              Setup Server                                  */
+/* -------------------------------------------------------------------------- */
 
-const PORT = 3000;
+/* --------------------------- Import Dependencies -------------------------- */
 
-const app = express();
+  const express = require("express");
+  const logger = require("morgan");
+  const mongoose = require("mongoose");
+  const compression = require("compression");
 
-app.use(logger("dev"));
+/* ------------------------------ Specify Port ------------------------------ */
+  // Define Port
+  const PORT = 3000;
 
-app.use(compression());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+  // Define Express Instance
+  const app = express();
 
-app.use(express.static("public"));
+/* ---------------------------- Setup Middleware ---------------------------- */
 
-mongoose.connect("mongodb://localhost/budget", {
-  useNewUrlParser: true,
-  useFindAndModify: false
-});
+  app.use(logger("dev"));
+  app.use(compression());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+  app.use(express.static("public"));
 
-// routes
-app.use(require("./routes/api.js"));
+/* ------------------- Setup Connection to MongoDB Server ------------------- */
 
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-});
+  // This is also where I define the database name as 'budget'- it is established the first time I run the server
+  mongoose.connect("mongodb://localhost/budget", {
+    useNewUrlParser: true,
+    useFindAndModify: false
+  });
+
+/* -------------------------- Define Route Mounting ------------------------- */
+
+  // Use routes exported from routes/api file for all requests
+  app.use(require("./routes/api.js"));
+
+/* ------------------------------ Start Server ------------------------------ */
+  app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}!`);
+  });

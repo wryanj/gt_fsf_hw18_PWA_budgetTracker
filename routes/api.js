@@ -1,34 +1,47 @@
-const router = require("express").Router();
-const Transaction = require("../models/transaction.js");
+/* -------------------------------------------------------------------------- */
+/*                                 API Routes                                 */
+/* -------------------------------------------------------------------------- */
 
-router.post("/api/transaction", ({body}, res) => {
-  Transaction.create(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(404).json(err);
-    });
-});
+/* --------------------------- Import Dependencies -------------------------- */
 
-router.post("/api/transaction/bulk", ({body}, res) => {
-  Transaction.insertMany(body)
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(404).json(err);
-    });
-});
+  const router = require("express").Router();
+  const Transaction = require("../models/transaction.js");
 
-router.get("/api/transaction", (req, res) => {
-  Transaction.find({}).sort({date: -1})
-    .then(dbTransaction => {
-      res.json(dbTransaction);
-    })
-    .catch(err => {
-      res.status(404).json(err);
-    });
-});
+/* -------------------- Define Routes For DB Interaction -------------------- */
 
-module.exports = router;
+  // Post a new transaction to the mongo db
+  router.post("/api/transaction", ({body}, res) => {
+    Transaction.create(body)
+      .then(dbTransaction => {
+        res.json(dbTransaction);
+      })
+      .catch(err => {
+        res.status(404).json(err);
+      });
+  });
+
+  // Post multiple new transactions to the mongo db
+  router.post("/api/transaction/bulk", ({body}, res) => {
+    Transaction.insertMany(body)
+      .then(dbTransaction => {
+        res.json(dbTransaction);
+      })
+      .catch(err => {
+        res.status(404).json(err);
+      });
+  });
+
+  // Retrieve all transactions from the mongo db
+  router.get("/api/transaction", (req, res) => {
+    Transaction.find({}).sort({date: -1})
+      .then(dbTransaction => {
+        res.json(dbTransaction);
+      })
+      .catch(err => {
+        res.status(404).json(err);
+      });
+  });
+
+/* -------------------- Export Routes For Use on serverjs ------------------- */
+  
+  module.exports = router;
