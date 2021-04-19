@@ -21,7 +21,7 @@
         "/icons/icon-512x512.png"
     ];
 
-    // Install Cache & Pre-Cache Key Assets
+    // Install Cache & Pre-Cache Key Assetss
     self.addEventListener("install", function (evt) {
         // pre cache all static assets
         evt.waitUntil(
