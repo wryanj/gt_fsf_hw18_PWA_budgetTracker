@@ -40,9 +40,7 @@
             <th>Transaction</th>
             <th>Amount</th>
           </thead>
-          <tbody id="tbody">
-            
-          </tbody>
+          <tbody id="tbody"></tbody>
         </table>
       </div>
 
@@ -66,6 +64,22 @@
               });
           });
         }
+      </script>
+      <!--This is the script for opening windows DB to hold offline transaction requests-->
+      <script>
+        // Request a DB instance
+        const request = window.indexedDB.open("transactionsDB", 1);
+        // Create object store inside the onupgradneeded method
+        request.onupgradeneeded = ({ target }) => {
+        const db = target.result;
+        const objectStore = db.createObjectStore("transactionsDB");
+        objectStore.createIndex("icebox", "icebox"); // UPDATE FOR ME
+        objectStore.createIndex("inprogress", "inprogress"); // UPDATE FOR ME
+        };
+        // On success console log the result
+        request.onsuccess = event => {
+          console.log(request.result.name);
+        };
       </script>
 
   </body>

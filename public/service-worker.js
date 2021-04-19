@@ -12,6 +12,7 @@
     const CACHE_NAME = "transactions-cache-v2";
     const DATA_CACHE_NAME = "transactions-cache-v1";
     const FILES_TO_CACHE = [
+        "/",
         "/index.html",
         "/index.js",
         "/manifest.webmanifest",
@@ -48,7 +49,7 @@
     self.clients.claim();
     });
 
-    // Setup service worker to intercept api calls
+    // Setup service worker to intercept api call
 
         /*
             This says that if any fetch request inclues our api routes, 
@@ -57,6 +58,9 @@
 
         self.addEventListener("fetch", function(evt) {
             if (evt.request.url.includes("/api/")) {
+                // Flag that service worker will try and fetch fromn cache
+                console.log('[Service Worker] fetch (data)', evt.request.url);
+                // Responde to request
                 evt.respondWith(
                 caches.open(DATA_CACHE_NAME).then(cache => {
                     return fetch(evt.request)
@@ -73,7 +77,6 @@
                     });
                 }).catch(err => console.log(err))
                 );
-
                 return;
         }
         // This serves the static files from the cache
