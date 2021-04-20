@@ -49,7 +49,7 @@
     self.clients.claim();
     });
 
-    // Setup service worker to intercept api call
+    // Setup service worker to intercept api calls
 
         /*
             This says that if any fetch request inclues our api routes, 

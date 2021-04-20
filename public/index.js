@@ -31,64 +31,71 @@
 
 /* ----------------------------- Setup indexedDB ---------------------------- */
 
-  //   // Request an indexedDB instance
-  //   let db;
-  //   const request = window.indexedDB.open("transactionDB", 1);
+    // Request an indexedDB instance
+    let db;
+    const request = window.indexedDB.open("transactionDB", 1);
 
-  //   // Create Schema
-  //   request.onupgradeneeded = function(event) {
-  //     const db = event.target.result;
-  //     db.createObjectStore("pending", {autoIncrement: true});
-  //   };
+    // Create Schema
+    request.onupgradeneeded = function(event) {
+      const db = event.target.result;
+      db.createObjectStore("pending", {autoIncrement: true});
+    };
    
-  //   // On success console log the result
-  //   request.onsuccess = function (event) {
-  //     db = event.target.result;
+    // On success console log the result
+    request.onsuccess = function (event) {
+      db = event.target.result;
 
-  //     // Check if online before readin result
-  //     if (navigator.onLine) {
-  //       checkDatabase();
-  //     }
-  //   };
+      // Check if online before readin result
+      if (navigator.onLine) {
+        checkDatabase();
+      }
+    };
 
-  //   request.onerror = function(event) {
-  //     console.log("Error!" + event.target.errorCode);
-  //   };
+    // On error log an error
+    request.onerror = function(event) {
+      console.log("Error!" + event.target.errorCode);
+    };
 
-  //   function saveRecord (record) {
-  //     const transaction = db.transaction(["pending"], "readwrite");
-  //     const store = transaction.objectStore("pending");
-  //     store.add(record);
-  //   };
+    // Save created transaction to the indexedDB
+    function saveRecord (record) {
+      console.log('indexedDB saveRecord initiated to save ' + record);
+      const transaction = db.transaction(["pending"], "readwrite");
+      const store = transaction.objectStore("pending");
+      store.add(record);
+      console.log('indexedDB store.add passed');
+    };
 
-  //   function checkDatabase () {
-  //     const transaction = db.transaction(["pending"], "readwrite");
-  //     const store = transaction.objectStore("pending");
-  //     const getAll = store.getAll(); 
+    // Check Databased and Send Saved Transactions to Server When Online
+    function checkDatabase () {
+      console.log('checked db');
+      const transaction = db.transaction(["pending"], "readwrite");
+      const store = transaction.objectStore("pending");
+      const getAll = store.getAll(); 
 
-  //     getAll.onsuccess = function() {
-  //       if (getAll.result.length > 0) {
-  //         fetch("/api/transaction/bulk", {
-  //           method: "POST",
-  //           body: JSON.stringify(getAll.result),
-  //           headers: {
-  //             Accept: "application/json, text/plain, */*",
-  //             "Content-Type": "application/json"
-  //           }
-  //         })
-  //         .then(response => response.json())
-  //           .then(() => {
-  //             // delete records if successful
-  //             const transaction = db.transaction(["pending"], "readwrite");
-  //             const store = transaction.objectStore("pending");
-  //             store.clear();
-  //           });
-  //       }
-  //     };
-  //   }
+      // On success of retrieval, update if there are items pending (in our indexedDB)
+      getAll.onsuccess = function() {
+        if (getAll.result.length > 0) {
+          fetch("/api/transaction/bulk", {
+            method: "POST",
+            body: JSON.stringify(getAll.result),
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json"
+            }
+          })
+          .then(response => response.json())
+            // Then delete records front indexedDB if successful
+            .then(() => {
+              const transaction = db.transaction(["pending"], "readwrite");
+              const store = transaction.objectStore("pending");
+              store.clear();
+            });
+        }
+      };
+    }
 
-  // // Listen for application to go back online
-  // window.addEventListener("online", checkDatabase);
+  // Listen for application to go back online and whwen it does, check database and update server
+  window.addEventListener("online", checkDatabase);
 
 
 
@@ -271,6 +278,7 @@
       })
       // If something failed, save to index.db the clear form
       .catch(err => {
+        console.log('send transaction to server failed (expected if offline) trigger indexedDB');
 
         // fetch failed, so save in indexed db by invoking function declared in indexdb setup section of script
         saveRecord(transaction);
