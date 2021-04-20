@@ -8,7 +8,7 @@
   let transactions = [];
   let myChart;
 
-/* ---------------------- Get All Transactions From DB ---------------------- */
+/* ---------------------- Get All Transactions FromMongo DB ----------------- */
   // Get all the transactions from Mongo DB
   fetch("/api/transaction")
 
@@ -31,26 +31,30 @@
 
 /* ----------------------------- Setup indexedDB ---------------------------- */
 
-    // Request an indexedDB instance
-    let db;
-    const request = window.indexedDB.open("transactionDB", 1);
+    // This defines the db variable to be set to a value later in the script and used in various functions
+    let db; 
 
-    // Create Schema
-    request.onupgradeneeded = function(event) {
-      const db = event.target.result;
-      db.createObjectStore("pending", {autoIncrement: true});
-    };
-   
-    // On success console log the result
+    // This defines a db name, and a version (window is optional since its a global object) and requests a db
+    const request = window.indexedDB.open("transactionDB", 1); 
+
+    // If indexedDB is created, set db to event.target.result & console log the DB name
     request.onsuccess = function (event) {
+      console.log('indexedDB created');
+      // Set db value to created db in indexed db
       db = event.target.result;
-
-      // Check if online before readin result
+      // Check if online before reading result
       if (navigator.onLine) {
         checkDatabase();
       }
     };
 
+    // Create Object Store (kind of like a collection within our transactions db)
+    request.onupgradeneeded = function(event) {
+      const db = event.target.result; // "target" is targeting the db we created. this "grabs the db"
+      // This creates a "table / collection" type deal called pending, within our transactionsDB database. autoincrement is for keypath
+      db.createObjectStore("pending", {autoIncrement: true}); // createObjectStore is a method of event.target.result
+    };
+   
     // On error log an error
     request.onerror = function(event) {
       console.log("Error!" + event.target.errorCode);
@@ -58,11 +62,14 @@
 
     // Save created transaction to the indexedDB
     function saveRecord (record) {
-      console.log('indexedDB saveRecord initiated to save ' + record);
+      // console log what I want to save
+      console.log('indexedDB saveRecord initiated to save as ' + JSON.stringify(record));
+      // Specify object store in scope of the new transaction, then the "mode" or type of thing I want to do in this transaction
       const transaction = db.transaction(["pending"], "readwrite");
+      // Now we return the object store we added to the scope of the object store we specified in transaction, for use in accessing object store
       const store = transaction.objectStore("pending");
+      // Now we say what we want to add it add, in this case an object same structure as our mongo db
       store.add(record);
-      console.log('indexedDB store.add passed');
     };
 
     // Check Databased and Send Saved Transactions to Server When Online
@@ -96,7 +103,6 @@
 
   // Listen for application to go back online and whwen it does, check database and update server
   window.addEventListener("online", checkDatabase);
-
 
 
 /* -------------------------------------------------------------------------- */

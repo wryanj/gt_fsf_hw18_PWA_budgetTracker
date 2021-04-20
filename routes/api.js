@@ -20,7 +20,7 @@
       });
   });
 
-  // Post multiple new transactions to the mongo db
+  // Post multiple new transactions to the mongo db (coming from indexedDB)
   router.post("/api/transaction/bulk", ({body}, res) => {
     Transaction.insertMany(body)
       .then(dbTransaction => {
