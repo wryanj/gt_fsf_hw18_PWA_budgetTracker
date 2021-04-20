@@ -28,6 +28,8 @@ In terms of displaying the page and allowing for charts to render, button presse
 
 This assignment was a good introduction to utilization of PWA concepts, and various ways you can provide users with functionality without having to rely on a connectoin to your server.  
 
+Lastly, as the assignment was not focused on UI I made only some minor updates to some starter code to have a front end to work with, however no time was spent optmizing the look and feel (which is why its pretty bare bones for the most part). 
+
 ## Usage
 This application can be used online or offline to keep a simple record of transactions, so that a total balance / amount transacted can be tracked over time. 
 
