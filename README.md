@@ -13,7 +13,7 @@ This assignment introduced us to PWA concepts and asked us to build a site based
 INPUT
 
 **Dashboard Snapshot** 
-INPUT
+ ![image](https://user-images.githubusercontent.com/72420733/115467447-867cf280-a1ff-11eb-8a26-cbcaeec442f6.png)
 
 **Demo Video**       
 Demo video below is guided walkthorough of application.  
