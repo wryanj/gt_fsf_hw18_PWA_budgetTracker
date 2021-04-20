@@ -37,9 +37,8 @@
     // This defines a db name, and a version (window is optional since its a global object) and requests a db
     const request = window.indexedDB.open("transactionDB", 1); 
 
-    // If indexedDB is created, set db to event.target.result & console log the DB name
+    // If indexedDB is opened, set db to event.target and check database if we are online
     request.onsuccess = function (event) {
-      console.log('indexedDB created');
       // Set db value to created db in indexed db
       db = event.target.result;
       // Check if online before reading result
