@@ -6,11 +6,12 @@
 
   // Define global variables and arrays to populate over time through program sequence
   let transactions = [];
+    console.log('transactions variable at index.js program start is ' + transactions);
   let myChart;
 
 /* ---------------------- Get All Transactions FromMongo DB ----------------- */
   // Get all the transactions from Mongo DB
-  fetch("/api/transaction")
+  fetch("/api/transactionS")
 
     // Returns data response to json
     .then(response => {
@@ -22,6 +23,7 @@
 
       // save db data on global variable
       transactions = data;
+        console.log('transactions variable after inital server call for transactions at index.js program start is ' + transactions);
 
       // Uses data to populate the Totals, tables, and charts
       populateTotal();
