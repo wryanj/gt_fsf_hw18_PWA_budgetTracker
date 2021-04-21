@@ -4,6 +4,7 @@
 
 /* --------------------------- Import Dependencies -------------------------- */
 
+  const path = require("path");
   const express = require("express");
   const logger = require("morgan");
   const mongoose = require("mongoose");
@@ -22,7 +23,8 @@
   app.use(compression());
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  app.use(express.static("public"));
+  //app.use(express.static("public"));
+  app.use(express.static(path.join(__dirname, 'public')));
 
 /* ------------------- Setup Connection to MongoDB Server ------------------- */
 
