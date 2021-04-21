@@ -10,7 +10,7 @@ This assignment introduced us to PWA concepts and asked us to build a site based
 
 ## Description
 **Deployed App (Heroku)**      
-INPUT
+https://warm-temple-75134.herokuapp.com/
 
 **Walkthrough Video**       
 Below is a link to a walkthrough video hosted on my google drive (for data size purposes). Here I demo the app and walk through the methods I used to achieve the assignment requirements. 
