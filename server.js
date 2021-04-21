@@ -27,10 +27,15 @@
 /* ------------------- Setup Connection to MongoDB Server ------------------- */
 
   // This is also where I define the database name as 'budget'- it is established the first time I run the server
-  mongoose.connect("mongodb://localhost/budget", {
-    useNewUrlParser: true,
-    useFindAndModify: false
-  });
+  mongoose.connect (
+    process.env.MONGODB_URI ||"mongodb://localhost/budget", 
+    {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      useFindAndModify: true
+    }
+  );
 
 /* -------------------------- Define Route Mounting ------------------------- */
 

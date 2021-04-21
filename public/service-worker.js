@@ -68,6 +68,7 @@
 
                 // Respond to the Request
                 evt.respondWith(
+                    
                     // Open the cache transactions-cache-v1 and returns a promise (that is open)
                     caches.open(DATA_CACHE_NAME).then(cache => {
 
