@@ -13,7 +13,7 @@ This assignment introduced us to PWA concepts and asked us to build a site based
 INPUT
 
 **Dashboard Snapshot** 
-INPUT
+![image](https://user-images.githubusercontent.com/72420733/115468722-7c5bf380-a201-11eb-8d87-39c1a8a25ba3.png)
 
 **Demo Video**       
 Demo video below is guided walkthorough of application.  
@@ -27,6 +27,8 @@ It takes an offline first approach to server resources from the cache if availib
 In terms of displaying the page and allowing for charts to render, button presses to work etc even if a user if offline, I cached the assets needed to do this using code within my service-worker js script. This is why users can load the latest information and interface with out being online. If they try and create new transactions while offline, they are able to do this. First their transaction is added to a running array for transactions (once its created). Then their transactions are held in an indexedDB I established within a "pending" object store. Every time the application is run there is a check for if the application is online. If the application is detected to be back online, it will then check the indexedDB and if pending transactions exist I bulk update them to my mongo server and then clear out the records kept in my indexed db as they are no longer pending, and are now synced with the master db. It will then pull back the latest data from the DB to display in the table and chart view. 
 
 This assignment was a good introduction to utilization of PWA concepts, and various ways you can provide users with functionality without having to rely on a connectoin to your server.  
+
+Lastly, as the assignment was not focused on UI I made only some minor updates to some starter code to have a front end to work with, however no time was spent optmizing the look and feel (which is why its pretty bare bones for the most part). 
 
 ## Usage
 This application can be used online or offline to keep a simple record of transactions, so that a total balance / amount transacted can be tracked over time. 
