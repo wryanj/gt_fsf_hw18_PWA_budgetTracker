@@ -14,11 +14,12 @@ INPUT
 
 **Walkthrough Video**       
 Below is a link to a walkthrough video hosted on my google drive (for data size purposes). Here I demo the app and walk through the methods I used to achieve the assignment requirements. 
-https://drive.google.com/file/d/1OtZyX5OPfYWOHvWXTx3zRew7b3GJb8D9/view?usp=sharing
+  https://drive.google.com/file/d/1OtZyX5OPfYWOHvWXTx3zRew7b3GJb8D9/view?usp=sharing
 
 
 **Dashboard Snapshot** 
-![image](https://user-images.githubusercontent.com/72420733/115468722-7c5bf380-a201-11eb-8d87-39c1a8a25ba3.png)
+![image](https://user-images.githubusercontent.com/72420733/115616104-c9050480-a2bd-11eb-882d-ea164d7c11a3.png)
+
 
 
 This assignment required us to build upon our knowledge of mongoDB, indexedDB, and other aspects of a Progressive Web Application (manifest, service worker etc) to complete a transaction tracking application that can be used offline. 
